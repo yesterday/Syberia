@@ -1,0 +1,10 @@
+#!/bin/bash
+
+if [ "" == "$1" ];then 
+    echo usage: $0 FILE
+    exit -1
+fi
+F="`basename $1`".dir
+[ -d $F ] || mkdir "$F"
+source ~/bin/config.sh
+java -jar $WTR_JAR  "$1" "$F/"

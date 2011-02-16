@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ "" == "$1" ];then 
+    echo usage: $0 FILE
+    exit -1
+fi
+F="`basename $1`".dir
+[ -d $F ] || mkdir "$F"
+source ~/bin/config.sh
+java -cp $SY_JAR  yester.day.syberia.temp.CompositionLoaderRunner  "$1" "$F/"

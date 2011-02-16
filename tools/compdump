@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ "" == "$1" ];then 
+    echo usage: $0 FILE
+    exit -1
+fi
+
+source ~/bin/config.sh
+java -cp $SY_JAR  yester.day.syberia.temp.ObjectDumperRunner  "$1" "$F/"

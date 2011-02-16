@@ -1,0 +1,3 @@
+#!/bin/bash
+source ~/bin/config.sh
+java -cp $WTR_JAR yester.day.watermelon.qsp.scene.SceneParser $1 

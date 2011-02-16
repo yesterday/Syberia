@@ -1,0 +1,8 @@
+import bpy
+
+#bpy.ops.wm.open_mainfile(filepath="/home/camel/Desktop/cylinder.blend")
+bpy.ops.import_scene.raw(filepath="{{FILENAME}}")
+bpy.ops.render.render()
+bpy.data.images['Render Result'].save_render("{{FILENAME}}.jpg")
+#bpy.ops.wm.save_as_mainfile(filepath="/home/camel/Desktop/cylinder_monkey.blend")
+bpy.ops.wm.quit_blender()

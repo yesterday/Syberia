@@ -1,0 +1,9 @@
+#!/bin/bash
+source ~/bin/config.sh
+C=cp
+[ x == "$2" ] && C=$2
+FILES=`java -cp $WTR_JAR yester.day.watermelon.qsp.scene.SceneParser $1 --short`
+D=$1.dir
+[ -d $D ] || mkdir $D
+$C $1 $D
+for a in $FILES;do $C ${a}_* $D;done

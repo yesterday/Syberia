@@ -1,0 +1,6 @@
+#!/bin/bash
+
+for a in BEHAVIOR TEXTURE PARAMETER MESH DATAARRAY SCENE; do
+    mkdir $a
+    mv *$a* $a
+done

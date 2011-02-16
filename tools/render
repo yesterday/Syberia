@@ -1,0 +1,12 @@
+#!/bin/bash
+
+PWD=~/bin/blender
+TPL=$PWD/render.py.in
+TMP=`mktemp $PWD/render.XXXXXXXXXX.py`
+if [ \! -f $TPL ]; then
+    echo $TPL not found;
+fi
+sed 's,{{FILENAME}},'$1',g' < $TPL > $TMP
+blender $PWD/blank.blend -P $TMP
+rm $TMP
+
