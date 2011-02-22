@@ -1,3 +1,20 @@
+/*
+ * Copyright (C) 2011. Siberia Linux Port Team.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ */
+
 package yester.day.syberia.loaders.composition;
 
 import org.codehaus.preon.Codec;
@@ -49,7 +66,6 @@ public class CompositionLoader {
 
         ComponentList list = Codecs.decode(cListCodec, bytes);
 
-
         stream.reset();
         stream.skip(c.compcsz);
         return list.components;
@@ -75,31 +91,13 @@ public class CompositionLoader {
         for (int i = 0, componentsLength = components.length; i < componentsLength; i++) {
             ObjectHeader component = components[i];
             int size = i == componentsLength - 1 ? totalSize : components[i + 1].offset - totalSize;
-            String name = component == null ? "00000_PARAMETEROPERATION" : componentFileName(component);
 
-            //            copy(is, size, path + name);
-//            System.out.println("File: " + name +
-//                    " size(cmo): " + size +
-//                    ", size(hdr): " + hS + "(" + Integer.toHexString(hS) + ")" +
-//                    ", global offset: " + Integer.toHexString(component.offset - c.componentsSize - HeaderSize) +
-//                    ", my offset: " + Integer.toHexString(totalSize - c.componentsSize - HeaderSize)
-//            );
             RestrictedInputStream restris = new RestrictedInputStream(is, size);
             Loader l = loaders.get(component.componentType);
             if (l == null) l = defaultLoader;
             composition.put(i, l.load(component, restris, composition));
-
-            int pos = restris.available();
             restris.close();
 
-            int skip = size - pos;
-//            System.out.println("Finished: last label @ " + Integer.toHexString(pos)
-//                    + " but " + Integer.toHexString(skip) +
-//                    " bytes left from " + Integer.toHexString(size));
-//            if (i < componentsLength - 1)
-//                System.out.println("Next component starts in " +
-//                        Integer.toHexString(components[i + 1].offset - component.offset - pos) + "\n");
-//            is.skip(skip);
             totalSize += size;
         }
         return composition;
